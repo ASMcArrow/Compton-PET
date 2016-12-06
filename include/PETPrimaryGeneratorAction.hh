@@ -2,7 +2,7 @@
 #define PETPRIMARYGENERATORACTION_H
 
 #include "G4VUserPrimaryGeneratorAction.hh"
-#include "G4SingleParticleSource.hh"
+#include "GateVSource.hh"
 
 class G4Event;
 
@@ -16,7 +16,7 @@ public:
     void GeneratePrimaries(G4Event* event);
 
 private:
-    G4SingleParticleSource* CircleSource;
+    GateVSource* GateSource;
 };
 
 #endif

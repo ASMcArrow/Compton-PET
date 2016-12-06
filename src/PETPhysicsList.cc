@@ -28,6 +28,8 @@
 #include "G4EmPenelopePhysics.hh"
 #include "G4EmDNAPhysics.hh"
 #include "G4RadioactiveDecayPhysics.hh"
+#include "G4EmLivermorePolarizedPhysics.hh"
+#include "G4eplusPolarizedAnnihilation.hh"
 
 using namespace CLHEP;
 
@@ -41,7 +43,7 @@ PETPhysicsList::PETPhysicsList() : G4VModularPhysicsList()
 
   G4EmParameters* emParameters = G4EmParameters::Instance();
   emParameters->SetMinEnergy(0*eV);
-  emParameters->SetMaxEnergy(160*MeV);
+  emParameters->SetMaxEnergy(600*keV);
   emParameters->SetNumberOfBinsPerDecade(50);
 
   emParameters->SetApplyCuts(true);
@@ -49,7 +51,7 @@ PETPhysicsList::PETPhysicsList() : G4VModularPhysicsList()
 
   SetVerboseLevel(1);
 
-  RegisterPhysics(new G4EmStandardPhysics_option4);
+  RegisterPhysics(new G4EmLivermorePolarizedPhysics);
   RegisterPhysics(new G4RadioactiveDecayPhysics);
   RegisterPhysics(new G4HadronPhysicsQGSP_BIC);
   RegisterPhysics(new G4EmExtraPhysics);
