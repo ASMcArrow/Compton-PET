@@ -18,6 +18,10 @@ public:
     {}
 
     void UserSteppingAction(const G4Step* aStep);
+
+private:
+    G4int TrackID = 0;
+    G4int IsPair = 0;
 };
 
 #endif

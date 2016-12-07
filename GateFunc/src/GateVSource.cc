@@ -80,6 +80,7 @@ void GateVSource::GeneratePrimaryVertex(G4Event* aEvent)
     particle_position = PosSPS->GenerateOne();
 
     G4PrimaryVertex* vertex = new G4PrimaryVertex(particle_position, GetParticleTime());
+    G4int trackID = G4UniformRand()*100;
 
     for(G4int i = 0; i != GetNumberOfParticles(); ++i)
     {
@@ -98,6 +99,7 @@ void GateVSource::GeneratePrimaryVertex(G4Event* aEvent)
         particle->SetKineticEnergy(kinEnergy);
         particle->SetCharge(GetParticleDefinition()->GetPDGCharge());
         particle->SetWeight(1);
+        particle->SetTrackID(trackID);
         vertex->SetPrimary(particle);
     }
 
