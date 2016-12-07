@@ -47,7 +47,7 @@ int main(int argc,char** argv)
     G4GeometryManager::GetInstance()->SetWorldMaximumExtent(30*cm);
 
     PETDetectorConstruction* massWorld = new PETDetectorConstruction;
-    massWorld->RegisterParallelWorld(new PETParallelWorld("PETParallelWorld"));
+    //massWorld->RegisterParallelWorld(new PETParallelWorld("PETParallelWorld"));
     runManager->SetUserInitialization(massWorld);
 
     G4VModularPhysicsList* physicsList = new PETPhysicsList;

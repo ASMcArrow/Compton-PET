@@ -29,7 +29,8 @@
 #include "G4EmDNAPhysics.hh"
 #include "G4RadioactiveDecayPhysics.hh"
 #include "G4EmLivermorePolarizedPhysics.hh"
-#include "G4eplusPolarizedAnnihilation.hh"
+#include "G4EmStandardPhysics_option4.hh"
+#include "G4GoudsmitSaundersonMscModel.hh"
 
 using namespace CLHEP;
 
@@ -66,7 +67,7 @@ PETPhysicsList::~PETPhysicsList()
 
 void PETPhysicsList::ConstructProcess()
 {
-    AddParallelScoring();
+    // AddParallelScoring();
     G4VModularPhysicsList::ConstructProcess();
 }
 

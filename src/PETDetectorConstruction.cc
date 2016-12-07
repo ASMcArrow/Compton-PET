@@ -41,7 +41,14 @@ G4VPhysicalVolume* PETDetectorConstruction::Construct()
     G4NistManager* nistManager = G4NistManager::Instance();
     G4Material* Water = nistManager->FindOrBuildMaterial("G4_WATER");
     G4Material* Air = nistManager->FindOrBuildMaterial("G4_AIR");
-    G4Material* Bone = nistManager->FindOrBuildMaterial("G4_B-100_BONE");
+
+    G4Element* Cd = nistManager->FindOrBuildElement(48);
+    G4Element* Zn = nistManager->FindOrBuildElement(30);
+    G4Element* Te = nistManager->FindOrBuildElement(52);
+    G4Material* CZT = new G4Material("CZT", 5.78*g/cm3, 3, kStateSolid);
+    CZT->AddElement(Cd, 0.368);
+    CZT->AddElement(Zn, 0.214);
+    CZT->AddElement(Te, 0.418);
 
     // World
     G4Box* world = new G4Box("World", 3*m, 3*m, 3*m);
@@ -49,10 +56,11 @@ G4VPhysicalVolume* PETDetectorConstruction::Construct()
     G4VPhysicalVolume *worldPhys = new G4PVPlacement(0, G4ThreeVector(), worldLogic, "WorldPhys", 0, false, 0);
     worldLogic->SetVisAttributes(visAttributes);
 
-    // Phantom
-    G4Box* phantom = new G4Box("Phantom", 15*cm, 15*cm, 30*cm);
-    G4LogicalVolume *phantomLogic = new G4LogicalVolume(phantom, Bone, "PhantomLogic");
-    G4VPhysicalVolume *phantomPhys = new G4PVPlacement(0, G4ThreeVector(0.0, 0.0, 30*cm), phantomLogic, "PhantomPhys", worldLogic, false, 0);
+    // CZT Sphere
+    G4Sphere* detector = new G4Sphere("CZTDetector", 5*cm, 10*cm, 0*deg, 360*deg, 0*deg, 180*deg);
+    G4LogicalVolume *detectorLogic = new G4LogicalVolume(detector, CZT, "CZTDetectorLogic");
+    G4VPhysicalVolume *detectorPhys = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), detectorLogic, "CZTDetectorPhys", worldLogic, false, 0);
+    detectorLogic->SetVisAttributes(visAttributes);
 
     return worldPhys;
 }
