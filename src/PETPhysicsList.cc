@@ -31,6 +31,7 @@
 #include "G4EmLivermorePolarizedPhysics.hh"
 #include "G4EmStandardPhysics_option4.hh"
 #include "G4GoudsmitSaundersonMscModel.hh"
+#include "PhysListEmPolarized.hh"
 
 using namespace CLHEP;
 
@@ -52,7 +53,8 @@ PETPhysicsList::PETPhysicsList() : G4VModularPhysicsList()
 
   SetVerboseLevel(1);
 
-  RegisterPhysics(new G4EmLivermorePolarizedPhysics);
+  // RegisterPhysics(new G4EmLivermorePolarizedPhysics);
+  RegisterPhysics(new PhysListEmPolarized);
   RegisterPhysics(new G4RadioactiveDecayPhysics);
   RegisterPhysics(new G4HadronPhysicsQGSP_BIC);
   RegisterPhysics(new G4EmExtraPhysics);

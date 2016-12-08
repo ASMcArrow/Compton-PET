@@ -9,7 +9,7 @@ class PETRunAction : public G4UserRunAction
 {
 public:
 
-    PETRunAction(const G4String detectorName);
+    PETRunAction();
     virtual ~PETRunAction();
 
     virtual G4Run* GenerateRun();
@@ -17,9 +17,7 @@ public:
     virtual void EndOfRunAction(const G4Run*);
 
 private:
-    G4String DetectorName;
-    G4double* EDep;
-    G4double* C11;
+
 };
 
 #endif // PETDETECTORSD_HH

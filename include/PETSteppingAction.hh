@@ -22,6 +22,8 @@ public:
 private:
     G4int TrackID = 0;
     G4int IsPair = 0;
+    G4double AzimAngle = 0;
+    G4bool Verbosity = 0;
 };
 
 #endif

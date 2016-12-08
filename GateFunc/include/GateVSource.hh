@@ -60,6 +60,7 @@ protected:
     G4double Energy;
     G4double Weight;
     G4int NbOfParticles;
+    G4int TrackID;
 };
 
 #endif

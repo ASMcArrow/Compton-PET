@@ -3,7 +3,7 @@
 #include "G4THitsMap.hh"
 #include "PETDetectorHit.hh"
 
-PETRun::PETRun(const G4String detectorName, G4bool verbose) : G4Run()
+PETRun::PETRun() : G4Run()
 {
 //    CollNames = new std::vector<G4String>;
 //    CollIDs = new std::vector<G4int>;
@@ -27,7 +27,7 @@ PETRun::PETRun(const G4String detectorName, G4bool verbose) : G4Run()
 //        HCollections->push_back(collection);
 //    }
 
-    Verbose = verbose;
+   // Verbose = verbose;
 }
 
 PETRun::~PETRun() {}

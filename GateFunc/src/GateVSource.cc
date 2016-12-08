@@ -80,7 +80,14 @@ void GateVSource::GeneratePrimaryVertex(G4Event* aEvent)
     particle_position = PosSPS->GenerateOne();
 
     G4PrimaryVertex* vertex = new G4PrimaryVertex(particle_position, GetParticleTime());
+
     G4int trackID = G4UniformRand()*100;
+    while (TrackID == trackID)
+        trackID = G4UniformRand()*100;
+
+//    G4cout << " " << G4endl;
+//    G4cout << "TrackID in source " << trackID << G4endl;
+    TrackID = trackID;
 
     for(G4int i = 0; i != GetNumberOfParticles(); ++i)
     {

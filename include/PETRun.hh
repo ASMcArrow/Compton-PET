@@ -10,7 +10,7 @@ class PETRun : public G4Run
 {
 public:
 
-  PETRun(const G4String detectorName, G4bool verbose);
+  PETRun();
   virtual ~PETRun();
 
   // virtual method from G4Run.

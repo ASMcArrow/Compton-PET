@@ -7,17 +7,21 @@
 #include "G4VProcess.hh"
 #include "G4PrimaryParticle.hh"
 
-static G4int i = 0;
-
 void PETSteppingAction::UserSteppingAction(const G4Step* aStep)
 {
     if (aStep->GetPostStepPoint()->GetMaterial())
     {
         if ((aStep->GetPostStepPoint()->GetMaterial()->GetName() == "CZT")&&
-                (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() == "compt")&&
+                (aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() == "pol-compt")&&
                 (aStep->IsFirstStepInVolume())&&(!aStep->GetTrack()->GetCreatorProcess()))
         {
+            G4CsvAnalysisManager* analysisManager = G4CsvAnalysisManager::Instance();
             G4int trackID =  aStep->GetTrack()->GetTrackID();
+            if (Verbosity > 0)
+            {
+                G4cout << "TrackID inside stepping action is " << trackID << G4endl;
+                G4cout << "The Point is " << aStep->GetPostStepPoint()->GetPosition() << G4endl;
+            }
 
             G4ThreeVector reference = G4ThreeVector(1,0,0);
             G4ThreeVector initDir =  aStep->GetPreStepPoint()->GetMomentumDirection();
@@ -27,7 +31,11 @@ void PETSteppingAction::UserSteppingAction(const G4Step* aStep)
             G4ThreeVector endDirPerp = endDir.perpPart(initDir);
 
             // G4cout << endDirPerp.azimAngle(reference, initDir)/deg << G4endl;
-            G4cout << endDir.azimAngle(reference, initDir)/deg << G4endl;
+            G4double azimAngle = endDir.azimAngle(reference, initDir)/deg;
+            if (Verbosity > 0)
+                G4cout << endDir.azimAngle(reference, initDir)/deg << G4endl;
+
+            aStep->GetTrack()->SetTrackStatus(fStopAndKill);
 
             if (TrackID == trackID)
                 IsPair++;
@@ -35,16 +43,23 @@ void PETSteppingAction::UserSteppingAction(const G4Step* aStep)
                 IsPair = 0;
 
             if (IsPair == 1)
-                G4cout << "It is a pair" << G4endl;
+            {
+                if (Verbosity > 0)
+                    G4cout << "It is a pair. Writing " << AzimAngle << " and " << azimAngle
+                           << " in the histogram." << G4endl;
+                analysisManager->FillH2(0, AzimAngle*deg, azimAngle*deg);
+            }
             else if (IsPair > 1)
-                G4cout << "Error! More than two photons." << G4endl;
+            {
+                if (Verbosity > 0)
+                    G4cout << "Error! More than two photons." << G4endl;
+                AzimAngle = 0;
+            }
             else if (IsPair == 0)
-                G4cout << "It is a new photon" << G4endl;
+                AzimAngle = azimAngle;
 
             TrackID = trackID;
         }
-
-
     }
 }
 
