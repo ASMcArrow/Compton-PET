@@ -29,7 +29,7 @@ void PETRunAction::BeginOfRunAction(const G4Run* aRun)
 
 void PETRunAction::EndOfRunAction(const G4Run* aRun)
 {
-    if(!IsMaster()) return;
+ //   if(!IsMaster()) return;
 
     G4CsvAnalysisManager* analysisManager = G4CsvAnalysisManager::Instance();
     analysisManager->Write();

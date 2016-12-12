@@ -1,4 +1,4 @@
-#undef G4MULTITHREADED
+// #undef G4MULTITHREADED
 #undef G4VIS_USE
 
 #include <cstdio>
@@ -69,7 +69,7 @@ int main(int argc,char** argv)
     delete ui;
     delete visManager;
 #else
-    runManager->BeamOn(1000000);
+    runManager->BeamOn(100000000);
 #endif
 
     delete runManager;
