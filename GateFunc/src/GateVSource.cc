@@ -9,6 +9,9 @@
 #include "Randomize.hh"
 #include "GateConstants.hh"
 #include "G4PhysicalConstants.hh"
+#include "G4StokesVector.hh"
+#include "G4UnitsTable.hh"
+#include "G4SystemOfUnits.hh"
 
 GateVSource::GateVSource(G4String name, G4String type) : Name(name), Type(type)
 {
@@ -64,13 +67,13 @@ void GateVSource::GeneratePrimariesForBackToBackSource(G4Event* aEvent)
         particle2->SetMomentum(-gammaMom.x(),-gammaMom.y(),-gammaMom.z());
     }
 
-    G4double phi = twopi * G4UniformRand();
-    G4ThreeVector lpolarization(cos(phi), sin(phi), 0.0);
-    lpolarization.rotateUz(particle1->GetMomentumDirection());
-    G4ThreeVector ortlPolarization = lpolarization.orthogonal();
+    G4double a1 = 0.22;
+    G4double a2 = 1 - a1*a1;
+    G4StokesVector* polarization1 = new G4StokesVector(G4ThreeVector(a1*a1-a2*a2, 2*a1*a2, 0));
+    G4StokesVector* polarization2 = new G4StokesVector(G4ThreeVector(-(a1*a1-a2*a2), -2*a1*a2, 0));
 
-    particle1->SetPolarization(lpolarization.x(), lpolarization.y(), lpolarization.z());
-    particle2->SetPolarization(ortlPolarization.x(), ortlPolarization.y(), ortlPolarization.z());
+    particle1->SetPolarization(polarization1->p1(), polarization1->p2(), polarization1->p3());
+    particle2->SetPolarization(polarization2->p1(), polarization2->p2(), polarization2->p3());
 }
 
 void GateVSource::GeneratePrimaryVertex(G4Event* aEvent)

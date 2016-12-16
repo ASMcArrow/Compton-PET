@@ -21,7 +21,7 @@ void PETRunAction::BeginOfRunAction(const G4Run* aRun)
 {
     G4CsvAnalysisManager* analysisManager = G4CsvAnalysisManager::Instance();
     G4cout << " Histogram id is " <<
-              analysisManager->CreateH2("1", "Distribution of Azimuthal Angles",
+              analysisManager->CreateH2("Stokes", "Distribution of Azimuthal Angles",
                                         100, (G4double)(-180*deg), (G4double)(180*deg),
                                         100, (G4double)(-180*deg), (G4double)(180*deg),
                                         "deg", "deg") << G4endl;

@@ -70,6 +70,7 @@ void PhysListEmPolarized::ConstructProcess()
 {
   // Add standard EM Processes
   
+  auto aParticleIterator=GetParticleIterator();
   aParticleIterator->reset();
   while( (*aParticleIterator)() ){
     G4ParticleDefinition* particle = aParticleIterator->value();
@@ -77,7 +78,7 @@ void PhysListEmPolarized::ConstructProcess()
     G4String particleName = particle->GetParticleName();
 
     if (particleName == "gamma") {
-      pmanager->AddDiscreteProcess(new G4PolarizedPhotoElectricEffect);
+      pmanager->AddDiscreteProcess(new G4PhotoElectricEffect);
       pmanager->AddDiscreteProcess(new G4PolarizedCompton);
       pmanager->AddDiscreteProcess(new G4PolarizedGammaConversion);      
 

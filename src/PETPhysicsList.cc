@@ -79,6 +79,7 @@ void PETPhysicsList::AddParallelScoring()
             = new G4ParallelWorldScoringProcess("ParaWorldScoringProc");
     theParallelWorldScoringProcess->SetParallelWorld("PETParallelWorld");
 
+    auto theParticleIterator=GetParticleIterator();
     theParticleIterator->reset();
     while((*theParticleIterator)())
     {
