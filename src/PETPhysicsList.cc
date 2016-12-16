@@ -53,7 +53,6 @@ PETPhysicsList::PETPhysicsList() : G4VModularPhysicsList()
 
   SetVerboseLevel(1);
 
-  // RegisterPhysics(new G4EmLivermorePolarizedPhysics);
   RegisterPhysics(new PhysListEmPolarized);
   RegisterPhysics(new G4RadioactiveDecayPhysics);
   RegisterPhysics(new G4HadronPhysicsQGSP_BIC);
