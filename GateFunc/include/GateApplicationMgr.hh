@@ -14,6 +14,7 @@ public:
     GateApplicationMgr();
     virtual ~GateApplicationMgr();
 
+    void SetFrameTime(G4double start, G4double end, G4int numOfFrames);
     void Initialize();
     void StartPET();
 

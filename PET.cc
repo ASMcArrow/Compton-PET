@@ -24,11 +24,8 @@
 #include "PETPrimaryGeneratorAction.hh"
 #include "PETActionInitialization.hh"
 #include "PETParallelWorld.hh"
-#include "G4GeometryTolerance.hh"
+#include "GateApplicationMgr.hh"
 #include "G4GeometryManager.hh"
-#include "G4CsvAnalysisManager.hh"
-
-#include "GateClock.hh"
 
 #include <math.h>
 
@@ -40,44 +37,38 @@ int main(int argc,char** argv)
     G4Random::setTheSeed(seed);
 
     // Set PET aquisition time.
-    // TimeStart indicates the time since the isotopes were created or approximately the stop of irradiation.
-//    GateClock::GetInstance()->SetStartTime(0*s);
-//    GateClock::GetInstance()->SetEndTime(15*60*s);
-#ifdef G4MULTITHREADED
-    G4MTRunManager* runManager = new G4MTRunManager;
-    runManager->SetNumberOfThreads(8);
-#else
-    G4RunManager* runManager = new G4RunManager;
-#endif
+    // StartTime indicates the time since the isotopes were created or approximately the stop of irradiation.
+    GateApplicationMgr* appManager = new GateApplicationMgr;
+    appManager->SetFrameTime(0*s, 15*60*s, 15);
+    appManager->Initialize();
 
-    G4GeometryManager::GetInstance()->SetWorldMaximumExtent(30*cm);
+//    G4GeometryManager::GetInstance()->SetWorldMaximumExtent(30*cm);
 
-    PETDetectorConstruction* massWorld = new PETDetectorConstruction;
-    //massWorld->RegisterParallelWorld(new PETParallelWorld("PETParallelWorld"));
-    runManager->SetUserInitialization(massWorld);
+//    PETDetectorConstruction* massWorld = new PETDetectorConstruction;
+//    //massWorld->RegisterParallelWorld(new PETParallelWorld("PETParallelWorld"));
+//    runManager->SetUserInitialization(massWorld);
 
-    G4VModularPhysicsList* physicsList = new PETPhysicsList;
-    physicsList->SetVerboseLevel(0);
-    runManager->SetUserInitialization(physicsList);
+//    G4VModularPhysicsList* physicsList = new PETPhysicsList;
+//    physicsList->SetVerboseLevel(0);
+//    runManager->SetUserInitialization(physicsList);
 
-    PETActionInitialization* actionInit = new PETActionInitialization(massWorld);
-    runManager->SetUserInitialization(actionInit);
-    runManager->Initialize();
+//    PETActionInitialization* actionInit = new PETActionInitialization(massWorld);
+//    runManager->SetUserInitialization(actionInit);
+//    runManager->Initialize();
 
-    G4UImanager* UImanager = G4UImanager::GetUIpointer();
+//#ifdef G4VIS_USE
+//    G4UImanager* UImanager = G4UImanager::GetUIpointer();
+//    G4UIExecutive* ui = new G4UIExecutive(argc, argv);
+//    G4VisManager* visManager = new G4VisExecutive;
+//    visManager->Initialize();
+//    UImanager->ApplyCommand("/control/execute init_vis.mac");
+//    ui->SessionStart();
+//    delete ui;
+//    delete visManager;
+//#else
+    appManager->StartPET();
+//#endif
 
-#ifdef G4VIS_USE
-    G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-    G4VisManager* visManager = new G4VisExecutive;
-    visManager->Initialize();
-    UImanager->ApplyCommand("/control/execute init_vis.mac");
-    ui->SessionStart();
-    delete ui;
-    delete visManager;
-#else
-    runManager->BeamOn(1000000);
-#endif
-
-    delete runManager;
+    delete appManager;
     return 0;
 }

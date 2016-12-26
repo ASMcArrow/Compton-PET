@@ -26,12 +26,11 @@ public:
     G4double GetCurrentTime() { return Time; }
     void SetCurrentTime( G4double time ) { Time = time; }
 
+    void SetFrameVector(std::vector<G4double> frameVector) { FrameVector = frameVector; }
+    std::vector<G4double> GetFrameVector() { return FrameVector; }
+
     G4double GetCurrentTimeSliceStart();
     G4double GetCurrentTimeSliceEnd();
-    void SetTimeSlices(std::vector<G4double> timeSlices);
-
-    G4int GetCurrentActivitySlice();
-    void SetActivitySlices(std::vector<G4int> activitySlices);
 
     bool NextSlice();
 
@@ -39,7 +38,7 @@ private:
     GateClock();
 
     static GateClock* Instance;
-    std::vector<G4double> TimeSlices;
+    std::vector<G4double> FrameVector;
     std::vector<G4int> ActivitySlices;
 
     G4double Time;
