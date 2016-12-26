@@ -111,6 +111,7 @@ void GateVSource::GeneratePrimaryVertex(G4Event* aEvent)
         particle->SetWeight(1);
         particle->SetTrackID(trackID);
         vertex->SetPrimary(particle);
+        vertex->SetT0(2*s);
     }
 
     aEvent->AddPrimaryVertex(vertex);

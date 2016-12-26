@@ -28,6 +28,8 @@
 #include "G4GeometryManager.hh"
 #include "G4CsvAnalysisManager.hh"
 
+#include "GateClock.hh"
+
 #include <math.h>
 
 int main(int argc,char** argv)
@@ -37,6 +39,10 @@ int main(int argc,char** argv)
     G4long seed = time(NULL);
     G4Random::setTheSeed(seed);
 
+    // Set PET aquisition time.
+    // TimeStart indicates the time since the isotopes were created or approximately the stop of irradiation.
+//    GateClock::GetInstance()->SetStartTime(0*s);
+//    GateClock::GetInstance()->SetEndTime(15*60*s);
 #ifdef G4MULTITHREADED
     G4MTRunManager* runManager = new G4MTRunManager;
     runManager->SetNumberOfThreads(8);
