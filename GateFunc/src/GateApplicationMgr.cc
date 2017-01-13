@@ -1,3 +1,5 @@
+#undef G4MULTITHREADED
+
 #include "GateApplicationMgr.hh"
 #include "G4UnitsTable.hh"
 #include "G4SystemOfUnits.hh"
@@ -29,7 +31,7 @@ void GateApplicationMgr::SetFrameTime(G4double start, G4double end, G4int numOfF
     for (G4int i = 0; i < numOfFrames; i++)
         frameVector.push_back(frameLength*i);
 
-    G4cout << frameVector.size() << G4endl;
+    // G4cout << frameVector.size() << G4endl;
     GateClock::GetInstance()->SetFrameVector(frameVector);
 }
 
@@ -45,7 +47,11 @@ void GateApplicationMgr::Initialize()
     physicsList->SetVerboseLevel(0);
     RunManager->SetUserInitialization(physicsList);
 
-    PETActionInitialization* actionInit = new PETActionInitialization(massWorld);
+#ifdef G4MULTITHREADED
+    PETActionInitialization* actionInit = new PETActionInitialization(massWorld, RunManager->GetNumberOfThreads());
+#else
+    PETActionInitialization* actionInit = new PETActionInitialization(massWorld, 1);
+#endif
     RunManager->SetUserInitialization(actionInit);
     RunManager->Initialize();
 }
@@ -59,6 +65,10 @@ void GateApplicationMgr::StartPET()
 {
     while (GateClock::GetInstance()->NextSlice())
     {
+#ifdef G4MULTITHREADED
         RunManager->BeamOn(RunManager->GetNumberOfThreads());
+#else
+        RunManager->BeamOn(1);
+#endif
     }
 }
