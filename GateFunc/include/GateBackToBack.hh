@@ -34,7 +34,9 @@ public:
 
     virtual void GeneratePrimaryVertex(G4Event* event);
 
-protected:
+private:
+    G4double CalculateCurrentIntensity();
+
     G4int NumOfThreads;
 
     G4SPSPosDistribution* PosSPS;
@@ -48,6 +50,8 @@ protected:
     G4bool AccolinearityFlag;
     G4double AccoValue;
 
+    G4double Intensity;
+    G4double HalfLife;
     G4double Energy;
     G4double Weight;
     G4int TrackID;

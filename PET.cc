@@ -42,20 +42,6 @@ int main(int argc,char** argv)
     appManager->SetFrameTime(0*s, 6*s, 6);
     appManager->Initialize();
 
-//    G4GeometryManager::GetInstance()->SetWorldMaximumExtent(30*cm);
-
-//    PETDetectorConstruction* massWorld = new PETDetectorConstruction;
-//    //massWorld->RegisterParallelWorld(new PETParallelWorld("PETParallelWorld"));
-//    runManager->SetUserInitialization(massWorld);
-
-//    G4VModularPhysicsList* physicsList = new PETPhysicsList;
-//    physicsList->SetVerboseLevel(0);
-//    runManager->SetUserInitialization(physicsList);
-
-//    PETActionInitialization* actionInit = new PETActionInitialization(massWorld);
-//    runManager->SetUserInitialization(actionInit);
-//    runManager->Initialize();
-
 #ifdef G4VIS_USE
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
     G4UIExecutive* ui = new G4UIExecutive(argc, argv);

@@ -39,6 +39,9 @@ GateBackToBack::GateBackToBack(std::vector<G4double> frameVector, G4double stop,
     AccolinearityFlag = false;
     AccoValue = 0.58*deg;
 
+    HalfLife = /*20.334*60*/1*s;
+    Intensity = 10*becquerel;
+
     t = 0;
 }
 
@@ -49,8 +52,15 @@ GateBackToBack::~GateBackToBack()
     delete AngSPS;
 }
 
+G4double GateBackToBack::CalculateCurrentIntensity()
+{
+    return Intensity*pow(2, -(FrameVector[t]-FrameVector[0])/HalfLife);
+}
+
 void GateBackToBack::GeneratePrimaryVertex(G4Event* aEvent)
 {
+    G4double intensity = CalculateCurrentIntensity();
+
     if (t > FrameVector.size()-1)
         G4cout << "ERROR: The time frame is already finished." << G4endl;
 
@@ -125,7 +135,7 @@ void GateBackToBack::GeneratePrimaryVertex(G4Event* aEvent)
             vertex->SetPrimary(particle2);
         }
 
-        timeInFrame = timeInFrame + (-log(G4UniformRand())*(1.0/100))*s;
+        timeInFrame = timeInFrame + (-log(G4UniformRand())*(1.0/(intensity/becquerel)))*s;
         G4cout << "TimeInFrame " << timeInFrame/s << G4endl;
 
         aEvent->AddPrimaryVertex(vertex);
