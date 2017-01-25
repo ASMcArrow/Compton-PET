@@ -1,6 +1,7 @@
 #ifndef PETDETECTORSD_HH
 #define PETDETECTORSD_HH
 
+#include "GatePulseCollection.hh"
 #include "G4VSensitiveDetector.hh"
 #include "GatePulse.hh"
 #include "globals.hh"

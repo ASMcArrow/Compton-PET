@@ -26,11 +26,6 @@ GateBackToBack::GateBackToBack(std::vector<G4double> frameVector, G4double stop,
     PosSPS->SetRadius(1*mm);
     PosSPS->SetCentreCoords(G4ThreeVector(0*m, 0*m, 0*m));
 
-    EneSPS = new G4SPSEneDistribution();
-    EneSPS->SetBiasRndm(GetBiasRndm());
-    EneSPS->SetEnergyDisType("Mono");
-    EneSPS->SetMonoEnergy(0.511*MeV);
-
     AngSPS = new G4SPSAngDistribution();
     AngSPS->SetPosDistribution(PosSPS);
     AngSPS->SetBiasRndm(GetBiasRndm());
@@ -48,7 +43,6 @@ GateBackToBack::GateBackToBack(std::vector<G4double> frameVector, G4double stop,
 GateBackToBack::~GateBackToBack()
 {
     delete PosSPS;
-    delete EneSPS;
     delete AngSPS;
 }
 

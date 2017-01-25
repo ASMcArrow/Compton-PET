@@ -11,9 +11,6 @@ GatePulse::GatePulse(G4Step* step)
     Time = step->GetTrack()->GetGlobalTime();
     Energy = step->GetTrack()->GetTotalEnergy()/keV;
     HitPosition = step->GetPostStepPoint()->GetPosition();
-
-//    if(step->GetTrack()->GetTotalEnergy()/keV > 511*keV)
-//        G4cout << step->GetTrack()->GetParticleDefinition()->GetParticleName() << G4endl;
 }
 
 GatePulse::~GatePulse()

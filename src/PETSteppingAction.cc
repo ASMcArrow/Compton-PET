@@ -9,10 +9,10 @@
 
 void PETSteppingAction::UserSteppingAction(const G4Step* aStep)
 {
-    if (!aStep->GetTrack()->GetCreatorProcess()&&(aStep->GetTrack()->GetTotalEnergy()/keV > 511*keV))
-           G4cout << "Energy is " << aStep->GetTrack()->GetTotalEnergy()/keV << " "
-                  << aStep->GetTrack()->GetParticleDefinition()->GetParticleName() << " "
-                  << aStep->GetTrack()->GetParentID() << G4endl;
+//    if (!aStep->GetTrack()->GetCreatorProcess()&&(aStep->GetTrack()->GetTotalEnergy() > 511*keV))
+//           G4cout << "Energy is " << aStep->GetTrack()->GetTotalEnergy()/keV << " "
+//                  << aStep->GetTrack()->GetParticleDefinition()->GetParticleName() << " "
+//                  << aStep->GetTrack()->GetParentID() << G4endl;
 
     //    if (aStep->GetPostStepPoint()->GetMaterial())
     //    {

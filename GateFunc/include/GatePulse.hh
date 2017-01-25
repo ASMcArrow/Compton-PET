@@ -36,7 +36,6 @@ private:
     G4ThreeVector HitPosition;
 };
 
-typedef G4THitsCollection<GatePulse> GatePulseCollection;
 extern G4ThreadLocal G4Allocator<GatePulse>* GatePulseAllocator;
 
 inline void* GatePulse::operator new(size_t)

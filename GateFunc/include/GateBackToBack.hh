@@ -29,7 +29,6 @@ public:
     virtual G4double GetAccoValue() { return AccoValue; }
 
     virtual G4SPSPosDistribution* GetPosDist() { return PosSPS; }
-    virtual G4SPSEneDistribution* GetEneDist() { return EneSPS; }
     virtual G4SPSAngDistribution* GetAngDist() { return AngSPS; }
 
     virtual void GeneratePrimaryVertex(G4Event* event);
@@ -40,7 +39,6 @@ private:
     G4int NumOfThreads;
 
     G4SPSPosDistribution* PosSPS;
-    G4SPSEneDistribution* EneSPS;
     G4SPSAngDistribution* AngSPS;
 
     std::vector<G4double> FrameVector;

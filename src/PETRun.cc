@@ -2,6 +2,7 @@
 #include "G4SDManager.hh"
 #include "G4THitsMap.hh"
 #include "GatePulse.hh"
+#include "GatePulseCollection.hh"
 
 PETRun::PETRun() : G4Run()
 {
