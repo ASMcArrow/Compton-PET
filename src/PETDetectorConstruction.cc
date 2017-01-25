@@ -20,6 +20,8 @@
 #include "G4RunManager.hh"
 #include "G4VSolid.hh"
 #include "G4Sphere.hh"
+#include "PETDetectorSD.hh"
+#include "G4SDManager.hh"
 
 using namespace CLHEP;
 
@@ -58,9 +60,21 @@ G4VPhysicalVolume* PETDetectorConstruction::Construct()
 
     // CZT Sphere
     G4Sphere* detector = new G4Sphere("CZTDetector", 5*cm, 10*cm, 0*deg, 360*deg, 0*deg, 180*deg);
-    G4LogicalVolume *detectorLogic = new G4LogicalVolume(detector, CZT, "CZTDetectorLogic");
-    G4VPhysicalVolume *detectorPhys = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), detectorLogic, "CZTDetectorPhys", worldLogic, false, 0);
-    detectorLogic->SetVisAttributes(visAttributes);
+    DetectorLogic = new G4LogicalVolume(detector, CZT, "CZTDetectorLogic");
+    G4VPhysicalVolume *detectorPhys = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), DetectorLogic, "CZTDetectorPhys", worldLogic, false, 0);
+    DetectorLogic->SetVisAttributes(visAttributes);
 
     return worldPhys;
+}
+
+void PETDetectorConstruction::ConstructSDandField()
+{
+    G4SDManager::GetSDMpointer()->SetVerboseLevel(1);
+
+    G4CollectionNameVector* collections = new G4CollectionNameVector;
+    collections->insert("PulseCollection");
+
+    G4VSensitiveDetector* detector = new PETDetectorSD("Detector", collections);
+    G4SDManager::GetSDMpointer()->AddNewDetector(detector);
+    SetSensitiveDetector(DetectorLogic, detector);
 }

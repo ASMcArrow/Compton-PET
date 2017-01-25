@@ -10,7 +10,8 @@
 void PETSteppingAction::UserSteppingAction(const G4Step* aStep)
 {
     if (!aStep->GetTrack()->GetCreatorProcess())
-        G4cout << "GlobalTime is " << aStep->GetTrack()->GetGlobalTime()/ns << " Local time is " << aStep->GetTrack()->GetLocalTime()/ns << G4endl;
+        if (aStep->GetPreStepPoint()->GetMaterial()->GetName() == "CZT")
+            G4cout << "GlobalTime is " << aStep->GetTrack()->GetGlobalTime()/ns << " Local time is " << aStep->GetTrack()->GetLocalTime()/ns << G4endl;
     //    if (aStep->GetPostStepPoint()->GetMaterial())
     //    {
     //        if ((aStep->GetPostStepPoint()->GetMaterial()->GetName() == "CZT")&&

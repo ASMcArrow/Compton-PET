@@ -18,9 +18,12 @@ public:
 
     G4VPhysicalVolume* Construct();
 
- // void ConstructSDandField();
- // This method is used in multi-threaded applications to build
- // per-worker non-shared objects: SensitiveDetectors and Field managers
+    void ConstructSDandField();
+    // This method is used in multi-threaded applications to build
+    // per-worker non-shared objects: SensitiveDetectors and Field managers
+
+private:
+    G4LogicalVolume* DetectorLogic;
 };
 
 #endif

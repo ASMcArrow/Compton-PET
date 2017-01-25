@@ -23,7 +23,6 @@
 #include "PETDetectorConstruction.hh"
 #include "PETPrimaryGeneratorAction.hh"
 #include "PETActionInitialization.hh"
-#include "PETParallelWorld.hh"
 #include "GateApplicationMgr.hh"
 #include "G4GeometryManager.hh"
 

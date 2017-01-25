@@ -21,11 +21,7 @@ public:
   void EndOfEvent(G4HCofThisEvent* HCE);
 
 private:
-  PETDetectorHitsCollection* EdepHitsCollection;
-  PETDetectorHitsCollection* C11HitsCollection;
-  PETDetectorHitsCollection* C10HitsCollection;
-  PETDetectorHitsCollection* O15HitsCollection;
-  PETDetectorHitsCollection* PositronHitsCollection;
+  PETDetectorHitsCollection* PulseCollection;
 
   G4String SensitiveDetectorName;
 };
