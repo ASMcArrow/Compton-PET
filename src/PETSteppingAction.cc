@@ -9,9 +9,11 @@
 
 void PETSteppingAction::UserSteppingAction(const G4Step* aStep)
 {
-    if (!aStep->GetTrack()->GetCreatorProcess())
-        if (aStep->GetPreStepPoint()->GetMaterial()->GetName() == "CZT")
-            G4cout << "GlobalTime is " << aStep->GetTrack()->GetGlobalTime()/ns << " Local time is " << aStep->GetTrack()->GetLocalTime()/ns << G4endl;
+    if (!aStep->GetTrack()->GetCreatorProcess()&&(aStep->GetTrack()->GetTotalEnergy()/keV > 511*keV))
+           G4cout << "Energy is " << aStep->GetTrack()->GetTotalEnergy()/keV << " "
+                  << aStep->GetTrack()->GetParticleDefinition()->GetParticleName() << " "
+                  << aStep->GetTrack()->GetParentID() << G4endl;
+
     //    if (aStep->GetPostStepPoint()->GetMaterial())
     //    {
     //        if ((aStep->GetPostStepPoint()->GetMaterial()->GetName() == "CZT")&&

@@ -84,9 +84,8 @@ void GateBackToBack::GeneratePrimaryVertex(G4Event* aEvent)
         G4PrimaryVertex* vertex = new G4PrimaryVertex(particle_position, timeInFrame);
 
         G4ParticleMomentum particleMomDir = AngSPS->GenerateOne();
-        G4double kinEnergy = EneSPS->GenerateOne(GetParticleDefinition());
         G4double mass = GetParticleDefinition()->GetPDGMass();
-        G4double totEnergy = kinEnergy + mass;
+        G4double totEnergy = 511*keV;
         G4double particleMom = std::sqrt(totEnergy*totEnergy - mass*mass);
         G4double px = particleMom * particleMomDir.x();
         G4double py = particleMom * particleMomDir.y();
@@ -115,7 +114,6 @@ void GateBackToBack::GeneratePrimaryVertex(G4Event* aEvent)
         G4PrimaryParticle* particle1 = new G4PrimaryParticle(GetParticleDefinition(), px, py, pz);
         particle1->SetMass(mass);
         particle1->SetTotalEnergy(totEnergy);
-        particle1->SetKineticEnergy(kinEnergy);
         particle1->SetCharge(GetParticleDefinition()->GetPDGCharge());
         particle1->SetWeight(1);
         particle1->SetPolarization(polarization1->p1(), polarization1->p2(), polarization1->p3());
@@ -125,11 +123,10 @@ void GateBackToBack::GeneratePrimaryVertex(G4Event* aEvent)
 
         G4PrimaryParticle* particle2 = new G4PrimaryParticle(GetParticleDefinition(), px, py, pz);
         particle2->SetMass(mass);
-        particle2->SetTotalEnergy(totEnergy);
-        particle2->SetKineticEnergy(kinEnergy);
+        particle2->SetTotalEnergy(511*keV);
         particle2->SetCharge(GetParticleDefinition()->GetPDGCharge());
         particle2->SetWeight(1);
-        particle2->SetMomentum(direction.x(), direction.y(), direction.z());
+        particle2->SetMomentumDirection(G4ThreeVector(direction.x(), direction.y(), direction.z()));
         particle2->SetPolarization(polarization2->p1(), polarization2->p2(), polarization2->p3());
         // particle2->SetTrackID(trackID);
         vertex->SetPrimary(particle2);

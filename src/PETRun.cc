@@ -1,74 +1,59 @@
 #include "PETRun.hh"
 #include "G4SDManager.hh"
 #include "G4THitsMap.hh"
-#include "PETDetectorHit.hh"
+#include "GatePulse.hh"
 
 PETRun::PETRun() : G4Run()
 {
-//    CollNames = new std::vector<G4String>;
-//    CollIDs = new std::vector<G4int>;
+    CollNames = new std::vector<G4String>;
+    CollIDs = new std::vector<G4int>;
 //    HCollections = new std::vector<G4double*>;
 
-//    G4SDManager* SDman = G4SDManager::GetSDMpointer();
-//    G4VSensitiveDetector* detector = SDman->FindSensitiveDetector(detectorName);
+    G4SDManager* SDman = G4SDManager::GetSDMpointer();
+    G4VSensitiveDetector* detector = SDman->FindSensitiveDetector("Detector");
 
-//    CollNum = detector->GetNumberOfCollections();
-//    for (G4int i = 0; i < CollNum; i++)
-//    {
-//        G4String collName =  detector->GetCollectionName(i);
-//        CollNames->push_back(collName);
-//        G4int collID = SDman->GetCollectionID(collName);
-//        CollIDs->push_back(SDman->GetCollectionID(collName));
+    CollNum = detector->GetNumberOfCollections();
+    for (G4int i = 0; i < CollNum; i++)
+    {
+        G4String collName =  detector->GetCollectionName(i);
+        CollNames->push_back(collName);
+        CollIDs->push_back(SDman->GetCollectionID(collName));
 
 //        G4double* collection = new G4double[300];
 //        for (int i = 0; i < 300; i++)
 //            collection[i] = 0;
 
-//        HCollections->push_back(collection);
-//    }
+ //       HCollections->push_back(collection);
+    }
 
-   // Verbose = verbose;
+    Verbose = 0;
 }
 
 PETRun::~PETRun() {}
 
 void PETRun::RecordEvent(const G4Event* aEvent)
 {
-//    numberOfEvent++;
+    numberOfEvent++;
 
-//    G4HCofThisEvent* HCE = aEvent->GetHCofThisEvent();
-//    if(HCE!=NULL)
-//    {
-//        PETDetectorHitsCollection* HC = (PETDetectorHitsCollection*)(HCE -> GetHC((*CollIDs)[0]));
-//        if(HC!=NULL)
-//        {
-//            for (G4int i = 0; i < HC->entries(); i++)
-//            {
-//                PETDetectorHit *hit = (PETDetectorHit*)(HC->GetHit(i));
-//                if (Verbose)
-//                {
-//                    G4cout << "HitsVector Initial: " << "i = "<< i << " Energy deposition is " << hit->GetEdep()
-//                           << " Position is" << hit->GetReplicaNum() << G4endl;
-//                }
+    G4HCofThisEvent* HCE = aEvent->GetHCofThisEvent();
+    if(HCE!=NULL)
+    {
+        GatePulseCollection* HC = (GatePulseCollection*)(HCE -> GetHC((*CollIDs)[0]));
+        if(HC!=NULL)
+        {
+            for (G4int i = 0; i < HC->entries(); i++)
+            {
+                GatePulse *pulse = (GatePulse*)(HC->GetHit(i));
+                if (Verbose)
+                {
+                    G4cout << "GatePulseCollection: " << "i = "<< i << " Energy is " << pulse->GetEnergy()
+                           << " Time is" << pulse->GetTime() << G4endl;
+                }
 //                G4int num = hit->GetReplicaNum();
 //                (*HCollections)[0][num] += hit->GetEdep();
-//            }
-//        }
-
-//        for (G4int i = 1; i < CollNum; i++)
-//        {
-//            HC = (PETDetectorHitsCollection*)(HCE -> GetHC((*CollIDs)[i]));
-//            if(HC!=NULL)
-//            {
-//                for (G4int j = 0; j < HC->entries(); j++)
-//                {
-//                    PETDetectorHit *hit = (PETDetectorHit*)(HC->GetHit(j));
-//                    G4int num = hit->GetReplicaNum();
-//                    (*HCollections)[i][num] += 1;
-//                }
-//            }
-//        }
-//    }
+            }
+        }
+    }
 }
 
 void PETRun::Merge(const G4Run * aRun)

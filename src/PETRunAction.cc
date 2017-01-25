@@ -14,7 +14,7 @@ PETRunAction::~PETRunAction()
 
 G4Run* PETRunAction::GenerateRun()
 {
-    return new G4Run;
+    return new PETRun;
 }
 
 void PETRunAction::BeginOfRunAction(const G4Run* aRun)

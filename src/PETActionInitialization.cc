@@ -2,6 +2,7 @@
 #include "PETActionInitialization.hh"
 #include "PETRunAction.hh"
 #include "PETSteppingAction.hh"
+#include "PETTrackingAction.hh"
 #include "GateClock.hh"
 #include "G4MTRunManager.hh"
 
@@ -25,4 +26,5 @@ void PETActionInitialization::Build() const
     SetUserAction(new PETPrimaryGeneratorAction(FrameVector, Stop, NumOfThreads));
     SetUserAction(new PETRunAction);
     SetUserAction(new PETSteppingAction);
+    SetUserAction(new PETTrackingAction);
 }

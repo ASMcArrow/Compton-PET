@@ -2,7 +2,7 @@
 #define PETDETECTORSD_CC
 
 #include "PETDetectorSD.hh"
-#include "PETDetectorHit.hh"
+#include "GatePulse.hh"
 
 #include "G4Step.hh"
 #include "G4VTouchable.hh"
@@ -32,18 +32,19 @@ PETDetectorSD::~PETDetectorSD()
 void
 PETDetectorSD::Initialize(G4HCofThisEvent*)
 {
-    PulseCollection = new PETDetectorHitsCollection(SensitiveDetectorName,
-                                                       collectionName[0]);
+    PulseCollection = new GatePulseCollection(SensitiveDetectorName,
+                                              collectionName[0]);
     PulseCollection->SetColID(0);
 }
 
 G4bool
 PETDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* obsolete)
 {
-    G4StepPoint* preStep = aStep->GetPreStepPoint();
-    G4TouchableHistory* touchable = (G4TouchableHistory*)(preStep->GetTouchable());
-
-    G4cout << "Local time in SD " << aStep->GetTrack()->GetLocalTime()/ns << G4endl;
+    if (aStep->GetTrack()->GetParticleDefinition()->GetParticleName() == "gamma")
+    {
+        GatePulse* pulse = new GatePulse(aStep);
+        PulseCollection->insert(pulse);
+    }
 }
 
 void

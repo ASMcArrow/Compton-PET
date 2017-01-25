@@ -2,7 +2,7 @@
 #define PETDETECTORSD_HH
 
 #include "G4VSensitiveDetector.hh"
-#include "PETDetectorHit.hh"
+#include "GatePulse.hh"
 #include "globals.hh"
 
 class G4Step;
@@ -21,7 +21,7 @@ public:
   void EndOfEvent(G4HCofThisEvent* HCE);
 
 private:
-  PETDetectorHitsCollection* PulseCollection;
+  GatePulseCollection* PulseCollection;
 
   G4String SensitiveDetectorName;
 };
