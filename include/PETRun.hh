@@ -3,6 +3,7 @@
 
 #include "G4Run.hh"
 #include "G4Event.hh"
+#include "GatePulseCollection.hh"
 
 #include <vector>
 
@@ -18,7 +19,7 @@ public:
   virtual void RecordEvent(const G4Event*);
   virtual void Merge(const G4Run*);
 
-   std::vector<G4double*>* GetHCollections() { return HCollections; }
+  std::vector<GatePulseCollection*>* GetHCollections() { return HCollections; }
 
 private:
   G4int CollNum;
@@ -27,10 +28,7 @@ private:
 
   G4bool Verbose;
 
-  std::vector<G4double*>* HCollections;
-
-//  G4double* EDep;
-//  G4double* C11;
+  std::vector<GatePulseCollection*>* HCollections;
 };
 
 #endif // PETRUN_HH

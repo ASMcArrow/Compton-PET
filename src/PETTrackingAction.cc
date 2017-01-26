@@ -8,10 +8,9 @@ using namespace CLHEP;
 
 void PETTrackingAction::PreUserTrackingAction(const G4Track* track)
 {
-    if(track->GetParentID() == 0)
-    {
-        G4cout << "PreUser tracking action " << track->GetTotalEnergy()/keV << G4endl;
-    }
+    if (track->GetParticleDefinition()->GetParticleName() == "e-")
+        G4cout << "Electron " << track->GetCreatorProcess()->GetProcessName() << G4endl;
+
 }
 
 void PETTrackingAction::PostUserTrackingAction(const G4Track* track)

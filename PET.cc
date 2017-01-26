@@ -1,4 +1,3 @@
-// #undef G4MULTITHREADED
 #undef G4VIS_USE
 
 #include <cstdio>
