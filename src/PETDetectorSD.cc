@@ -42,18 +42,6 @@ PETDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* obsolete)
 {
     if (aStep->GetTrack()->GetParticleDefinition()->GetParticleName() == "gamma")
     {
-        if (aStep->GetTrack()->GetTotalEnergy() == 0)
-        {
-            G4cout << "Energy is zero " << aStep->GetPostStepPoint()->GetProcessDefinedStep()->GetProcessName() << " " <<
-                      aStep->GetTrack()->GetTrackStatus() << G4endl;
-            const std::vector<const G4Track*>* secondaries = aStep->GetSecondaryInCurrentStep();
-            G4cout << "Secondaries are " << secondaries->size() << G4endl;
-            for (G4int i = 0; i < secondaries->size(); i++)
-                G4cout << (*secondaries)[0]->GetParticleDefinition()->GetParticleName() << G4endl;
-        }
-        else
-            G4cout << aStep->GetTrack()->GetTrackStatus() << G4endl;
-
         GatePulse* pulse = new GatePulse(aStep);
         PulseCollection->insert(pulse);
         aStep->GetTrack()->SetTrackStatus(fStopAndKill);

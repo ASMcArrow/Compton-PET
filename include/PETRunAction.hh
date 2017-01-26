@@ -1,9 +1,13 @@
-#ifndef PETDETECTORSD_HH
-#define PETDETECTORSD_HH
+#ifndef PETRUNACTION_HH
+#define PETRUNACTION_HH
+
+#include "GateCoincidencePulse.hh"
+#include "GatePulseCollection.hh"
 
 #include "G4UserRunAction.hh"
 #include "globals.hh"
 #include <vector>
+#include <deque>
 
 class PETRunAction : public G4UserRunAction
 {
@@ -17,7 +21,10 @@ public:
     virtual void EndOfRunAction(const G4Run*);
 
 private:
+    void FindCoincidences(std::vector<GatePulseCollection*>* collections);
 
+    std::deque<GateCoincidencePulse*> CoincidencePulses;
+    G4double CoincidenceWindow;
 };
 
-#endif // PETDETECTORSD_HH
+#endif // PETRUNACTION_HH
