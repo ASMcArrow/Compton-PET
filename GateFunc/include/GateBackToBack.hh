@@ -48,6 +48,7 @@ private:
     G4bool AccolinearityFlag;
     G4double AccoValue;
 
+    G4double NextTime;
     G4double Intensity;
     G4double HalfLife;
     G4double Energy;

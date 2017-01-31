@@ -38,7 +38,7 @@ int main(int argc,char** argv)
     // Set PET aquisition time.
     // StartTime indicates the time since the isotopes were created or approximately the stop of irradiation.
     GateApplicationMgr* appManager = new GateApplicationMgr;
-    appManager->SetFrameTime(0*s, 6*s, 6);
+    appManager->SetFrameTime(0*s, 10*s, 10);
     appManager->Initialize();
 
 #ifdef G4VIS_USE

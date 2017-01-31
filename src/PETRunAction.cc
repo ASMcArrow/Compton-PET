@@ -8,7 +8,9 @@
 #include "G4SystemOfUnits.hh"
 
 PETRunAction::PETRunAction() : G4UserRunAction()
-{}
+{
+    CoincidenceWindow = 10*ns;
+}
 
 PETRunAction::~PETRunAction()
 {}
@@ -28,6 +30,20 @@ void PETRunAction::EndOfRunAction(const G4Run* aRun)
     PETRun* run = (PETRun*)aRun;
     std::vector<GatePulseCollection*>* collections = run->GetHCollections();
     FindCoincidences(collections);
+
+    std::deque<GateCoincidencePulse*>::iterator coinceIter = coinceIter = CoincidencePulses.begin();
+    while( coinceIter != CoincidencePulses.end())
+    {
+
+        GateCoincidencePulse* coincidence = (*coinceIter);
+        for (G4int i = 0; i < coincidence->size(); i++)
+        {
+            G4cout << (*coincidence)[i]->GetTime()/ns << G4endl;
+        }
+
+        G4cout << "***" << G4endl;
+        coinceIter++;
+    }
 }
 
 void PETRunAction::FindCoincidences(std::vector<GatePulseCollection *>* collections)
@@ -58,21 +74,24 @@ void PETRunAction::FindCoincidences(std::vector<GatePulseCollection *>* collecti
                     sortedIter++;
                 sortedPulseList.insert(sortedIter, pulse);
             }
+        }
 
-            // Look for coincidences. We will start from the earliest pulses.
+        // Look for coincidences. We will start from the earliest pulses.
+        for(G4int i = sortedPulseList.size()-1; i >= 0; i--)
+        {
             bool coincidenceOccured = false;
-            for(G4int i = sortedPulseList.size()-1; i >= 0; i--)
-            {
-                GatePulse* pulse = sortedPulseList.back();
-                sortedPulseList.pop_back();
+            GatePulse* pulse = sortedPulseList.back();
+            sortedPulseList.pop_back();
 
-                coinceIter = CoincidencePulses.begin();
-                while( coinceIter != CoincidencePulses.end() && (*coinceIter)->IsInCoincidence(pulse) )
+            coinceIter = CoincidencePulses.begin();
+            while( coinceIter != CoincidencePulses.end())
+            {
+                if ((*coinceIter)->IsInCoincidence(pulse))
                 {
                     coincidenceOccured = true;
                     (*coinceIter)->push_back(pulse);
-                    coinceIter++;
                 }
+                coinceIter++;
             }
 
             if(!coincidenceOccured)
@@ -80,8 +99,7 @@ void PETRunAction::FindCoincidences(std::vector<GatePulseCollection *>* collecti
                 GateCoincidencePulse* coincidence = new GateCoincidencePulse(pulse, CoincidenceWindow);
                 CoincidencePulses.push_back(coincidence);
             }
-            else
-                delete pulse;
         }
+
     }
 }
