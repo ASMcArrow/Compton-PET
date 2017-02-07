@@ -1,5 +1,6 @@
 #include "PETRunAction.hh"
 #include "PETRun.hh"
+#include "PETFileWriter.hh"
 #include "GatePulseCollection.hh"
 
 #include "G4RunManager.hh"
@@ -36,14 +37,18 @@ void PETRunAction::EndOfRunAction(const G4Run* aRun)
     {
 
         GateCoincidencePulse* coincidence = (*coinceIter);
-        for (G4int i = 0; i < coincidence->size(); i++)
+        for (G4int i = 1; i < coincidence->size(); i++)
         {
-            G4cout << (*coincidence)[i]->GetTime()/ns << G4endl;
+            G4cout << (*coincidence)[i]->GetTime()/ns - (*coincidence)[i-1]->GetTime()/ns << G4endl;
         }
 
         G4cout << "***" << G4endl;
         coinceIter++;
     }
+
+    PETFileWriter* fileWriter = new PETFileWriter;
+    fileWriter->WriteFile(&CoincidencePulses, G4String("GPURECON"));
+    delete fileWriter;
 }
 
 void PETRunAction::FindCoincidences(std::vector<GatePulseCollection *>* collections)
@@ -75,6 +80,18 @@ void PETRunAction::FindCoincidences(std::vector<GatePulseCollection *>* collecti
                 sortedPulseList.insert(sortedIter, pulse);
             }
         }
+
+        sortedIter = sortedPulseList.begin();
+        G4double previous = 0;
+        for(G4int i = 0; i < sortedPulseList.size(); i++)
+        {
+
+            G4cout << (*sortedIter)->GetTime()/ns - previous/ns << G4endl;
+            previous = (*sortedIter)->GetTime();
+            sortedIter++;
+        }
+
+        G4cout << "********" << G4endl;
 
         // Look for coincidences. We will start from the earliest pulses.
         for(G4int i = sortedPulseList.size()-1; i >= 0; i--)

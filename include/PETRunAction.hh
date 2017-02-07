@@ -25,6 +25,7 @@ private:
 
     std::deque<GateCoincidencePulse*> CoincidencePulses;
     G4double CoincidenceWindow;
+    // PETFileWriter* FileWriter;
 };
 
 #endif // PETRUNACTION_HH

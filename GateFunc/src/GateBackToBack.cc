@@ -23,7 +23,7 @@ GateBackToBack::GateBackToBack(std::vector<G4double> frameVector, G4double stop,
     PosSPS->SetBiasRndm(GetBiasRndm());
     PosSPS->SetPosDisType("Volume");
     PosSPS->SetPosDisShape("Sphere");
-    PosSPS->SetRadius(1*mm);
+    PosSPS->SetRadius(1*cm);
     PosSPS->SetCentreCoords(G4ThreeVector(0*m, 0*m, 0*m));
 
     AngSPS = new G4SPSAngDistribution();
@@ -35,7 +35,7 @@ GateBackToBack::GateBackToBack(std::vector<G4double> frameVector, G4double stop,
     AccoValue = 0.58*deg;
 
     HalfLife = /*20.334*60*/1*s;
-    Intensity = 10*becquerel;
+    Intensity = 1000*becquerel;
 
     NextTime = 0;
 
@@ -58,12 +58,15 @@ void GateBackToBack::GeneratePrimaryVertex(G4Event* aEvent)
     G4double intensity = CalculateCurrentIntensity();
 
     if (t > FrameVector.size()-1)
+    {
         G4cout << "ERROR: The time frame is already finished." << G4endl;
+        return;
+    }
 
     // We need to split the time interval into the number of threads
     G4double timeThreshold = 0;
     G4double timeInFrame = FrameVector[t];
-    if (FrameVector[t+1])
+    if (t <= (int)FrameVector.size()-2)
         timeThreshold = (FrameVector[t+1] - FrameVector[t])/NumOfThreads + FrameVector[t];
     else
         timeThreshold = (Stop - FrameVector[FrameVector.size()-1])/NumOfThreads + FrameVector[FrameVector.size()-1];

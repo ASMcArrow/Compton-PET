@@ -42,6 +42,8 @@ PETDetectorSD::ProcessHits(G4Step* aStep, G4TouchableHistory* obsolete)
 {
     if (aStep->GetTrack()->GetParticleDefinition()->GetParticleName() == "gamma")
     {
+        if (aStep->GetTrack()->GetCreatorProcess())
+            G4cout << aStep->GetTrack()->GetCreatorProcess()->GetProcessName() << G4endl;
         GatePulse* pulse = new GatePulse(aStep);
         PulseCollection->insert(pulse);
         aStep->GetTrack()->SetTrackStatus(fStopAndKill);
